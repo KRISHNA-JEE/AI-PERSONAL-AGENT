@@ -55,7 +55,7 @@ def test_get_recent_emails_success(mock_creds, mock_build):
                 'headers': [
                     {'name': 'From', 'value': 'test@example.com'},
                     {'name': 'Subject', 'value': 'Test Subject'},
-                    {'name': 'Date', 'value': 'Mon, 1 Jan 2026 00:00:00'}
+                    {'name': 'Date', 'value': 'Thu, 1 Jan 2026 00:00:00'}
                 ]
             }
         })
@@ -88,13 +88,13 @@ def test_summarize_emails():
             'from': 'sender1@example.com',
             'subject': 'Subject 1',
             'snippet': 'Email content preview',
-            'date': 'Mon, 1 Jan 2026 00:00:00'
+            'date': 'Thu, 1 Jan 2026 00:00:00'
         },
         {
             'from': 'sender2@example.com',
             'subject': 'Subject 2',
             'snippet': 'Another email preview',
-            'date': 'Tue, 2 Jan 2026 00:00:00'
+            'date': 'Fri, 2 Jan 2026 00:00:00'
         }
     ]
     
