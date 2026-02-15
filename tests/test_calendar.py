@@ -4,7 +4,7 @@ Tests for the calendar module.
 
 import pytest
 from unittest.mock import Mock, patch
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from ai_assistant.modules.calendar import CalendarManager, get_calendar_events
 
 
@@ -42,8 +42,8 @@ def test_get_upcoming_events_success(mock_creds, mock_build):
     mock_build.return_value = mock_service
     
     # Mock events list response
-    now = datetime.utcnow()
-    event_time = (now + timedelta(days=1)).isoformat() + 'Z'
+    now = datetime.now(timezone.utc)
+    event_time = (now + timedelta(days=1)).isoformat().replace('+00:00', 'Z')
     
     mock_service.events().list().execute.return_value = {
         'items': [
@@ -105,21 +105,22 @@ def test_format_events():
     """Test formatting events."""
     manager = CalendarManager()
     
-    now = datetime.utcnow()
-    event_time = (now + timedelta(days=1)).isoformat()
+    now = datetime.now(timezone.utc)
+    event_time = now + timedelta(days=1)
+    event_time_str = event_time.isoformat()
     
     events = [
         {
             'summary': 'Meeting',
-            'start': event_time,
-            'end': event_time,
+            'start': event_time_str,
+            'end': event_time_str,
             'location': 'Office',
             'description': 'Important meeting'
         },
         {
             'summary': 'Lunch',
-            'start': event_time,
-            'end': event_time,
+            'start': event_time_str,
+            'end': event_time_str,
             'location': '',
             'description': ''
         }

@@ -6,7 +6,7 @@ This module integrates with Google Calendar API to manage events and scheduling.
 
 import os
 from typing import List, Dict, Optional
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from dotenv import load_dotenv
 
 from google.auth.transport.requests import Request
@@ -132,9 +132,9 @@ class CalendarManager:
         
         try:
             # Calculate time range
-            now = datetime.utcnow()
-            time_min = now.isoformat() + 'Z'
-            time_max = (now + timedelta(days=days_ahead)).isoformat() + 'Z'
+            now = datetime.now(timezone.utc)
+            time_min = now.isoformat().replace('+00:00', 'Z')
+            time_max = (now + timedelta(days=days_ahead)).isoformat().replace('+00:00', 'Z')
             
             logger.debug(f"Fetching events from {time_min} to {time_max}")
             
